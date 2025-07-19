@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body{
+            background-color: rgb(177, 175, 175);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .container{
+            width: 900px;
+            height: auto;
+            background-color: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 20px;
+        }
+
+        .mainimages{
+            display: flex;
+            transition:all 0.5s;
+        }    
+
+        img{
+            width: 100%;
+            height: auto;
+            display: block;
+        }    
+
+        .cardleft{
+            width: 90%;
+            overflow: hidden;
+        }
+
+        .imgselect{
+            margin-top: 10px;
+            display: flex;
+            gap: 2px;
+        }
+        /* cardright */
+        .cardright{
+            margin-top: 40px;
+        }
+        .active{
+            border: 2px solid orange;
+        }
+
+        .star{
+            display: flex;
+            gap: 1rem;
+        }
+        .stargroup ion-icon{
+            color: grey;
+        }
+
+        .stargroup ion-icon:nth-child(1),
+        .stargroup ion-icon:nth-child(2),
+        .stargroup ion-icon:nth-child(3)
+        {
+       color: orange;
+
+        }
+
+        h4{
+            margin: 20px 0px;
+        }
+        h4 span{
+            color: #858181;
+        }
+        p{
+            font-size: 16px;
+            width: 80vh;
+            color: grey;
+            padding: 10px 0;
+        }
+        .form{
+            display: flex;
+            width: 400px;
+            /* justify-content: space-between; */
+            margin-bottom: 30px;
+            gap: 2rem;
+        }
+        .btncart{
+            padding: 10px;
+            background-color:orangered;
+            border: none;
+            color: white;
+                cursor: pointer;
+        }
+
+        .formgroup label,.formgroup select{
+            display: block;
+        }
+        .formgroup select{
+            padding: 5px;
+            margin-top: 8px;
+            width: 150px;
+            height: 25px;
+        }
+        .inputgroup button{
+        font-size: 15px;
+        padding: 5px;
+        background-color: black;
+        color: white;
+        }
+        .inputgroup  input{
+            width: 40px;
+            text-align: center;
+        }
+        .inputgroup{
+            margin-top: 5px;
+             display: flex;
+           gap: 0; 
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="cardleft">
+        <div class="mainimages">
+               <img src="./cam images/img1.jpeg"  alt="frontview">
+               <img src="./cam images/img2.jpeg"  alt="rearview">   
+               <img src="./cam images/img3.jpeg"  alt="frontview-1">      
+               <img src="./cam images/img4.jpeg"  alt="Topview"> 
+        </div>     
+    <div class="imgselect">
+        <div class="img active">
+            <a href="#" data-id="1"><img src="./cam images/img1.jpeg" ></a>
+        </div>    
+        <div class="img">
+            <a href="#" data-id="2"><img src="./cam images/img2.jpeg" ></a>
+        </div>    
+        <div class="img">
+            <a href="#" data-id="3"><img src="./cam images/img3.jpeg" ></a>
+        </div>    
+        <div class="img">
+            <a href="#" data-id="4"><img src="./cam images/img4.jpeg" ></a>
+        </div>   
+    </div>
+    </div> 
+    <div class="cardright">
+        <h2>Canon EOS R10 24.2MP </h2>
+        <div class="star">
+          <div class="stargroup">
+           <ion-icon name="star"></ion-icon>
+           <ion-icon name="star"></ion-icon>
+           <ion-icon name="star"></ion-icon>
+           <ion-icon name="star"></ion-icon>
+           <ion-icon name="star"></ion-icon>
+          </div>
+          <span>3 reviews</span>
+        </div>
+        <h4>$39.00 <span><s>$50.00</s></span></h4>
+        <p>Canon EOS R10 24.2MP RF-S18-150 F/3.5-6.3 IS STM Mirrorless Camera (APS-C Sendor, 4K UHD Video) for Wedding & Content Creators - BlackDual Pixel CMOS AF II covering approximately 100% width and height(2) with up to 651 zones down to EV -4.</p>
+        <div class="form">
+            <div class="formgroup">
+                <label >Color</label>
+                <select>
+                    <option value="black">black</option>
+                </select>
+            </div>
+            <div class="formgroup">
+                <label >Qty</label>
+                <div class="inputgroup">
+                     <button id="minus">-</button>
+                     <input type="text" id="qty" value="1">
+                     <button id="plus">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <button class="btncart">Add Cart</button>
+    </div>    
+</div>
+</body>
+
+<script>
+
+let imgs= document.querySelectorAll(".img a");
+let imgId=1;
+let imgDiv=document.querySelectorAll(".img");
+
+      imgs.forEach((img)=>{
+      img.addEventListener("click",(e)=>{
+      e.preventDefault();
+      imgId = img.dataset.id;      
+
+     imgDiv.forEach((img)=>{
+     img.classList.remove("active");
+   
+  })  
+    img.parentElement.classList.add("active");
+    moveImage(); 
+       })    
+  })   
+
+function moveImage(){
+   let imgWidth = document.querySelector(".mainimages img:first-child").clientWidth;
+    
+    let width=(imgId-1)*imgWidth;
+
+    let imageframe = document.querySelector(".mainimages");
+    // console.log(width);
+        imageframe.style.transform=`translatex(${-width}px)`;
+}   
+
+let minusbtn =document.getElementById("minus");
+let plusbtn = document.getElementById("plus");
+let qtytxt = document.getElementById("qty");
+
+minusbtn.addEventListener("click",()=>{
+    let qty = parseInt(qtytxt.value);
+    if(qty>0){
+        qty--;
+        qtytxt.value=qty;
+    }
+})
+
+plusbtn.addEventListener("click",()=>{
+    let qty = parseInt(qtytxt.value);
+    if((qty>=0)&&(qty<5)){
+        qty++;
+        qtytxt.value=qty;
+    }
+})
+
+
+
+</script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</html>
